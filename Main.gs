@@ -1,8 +1,7 @@
 /* Custom SMR Tracker (Updated 20 June 2018) * SSgt Ulan O Hawthorne Jr. * Detatchment 560 (Manhattan College) *
 * https://wingsuid.holmcenter.com/psp/wings/WINGS/WINGS_LOCAL/q?ICAction=ICQryNameURL%3DPUBLIC.SMR&ICAction=ICQryNameURL=PUBLIC.SMR  */
 function onOpen() {
-  var ui = SpreadsheetApp.getUi(), menu = ui.createMenu('SMR Options'), item = menu.addItem('Update Tracker','SMR_Code');
-  item.addToUi();
+  var ui = SpreadsheetApp.getUi(), menu = ui.createMenu('SMR Options'), item = menu.addItem('Update Tracker','SMR_Code'); item.addToUi();
 }
 function SMR_Code(){
   if(DriveApp.getFilesByName("SMR.csv").hasNext() == true){
@@ -107,11 +106,8 @@ function PushMajUpdates(){
   }     
 }  
 function PushUpdates(Dictionary){
-  var DetColRange = [];
-  var CadetRow = [];  
   var CustomColNames = ['EmpID','Last Name','First Name','AS-Level','Status','Majcode','ACT','Sat-Verb','Sat-Math','Pilot','CSO/NAV','AA','Verbal','Quant','TGPA','CGPA','DOC','DoDMERB-EXP','AFPT','AFPT-Stat','AFPT-DT','MRS','Conditionals','DOB','Citizen','Cat Sel'];
-  var DetCols = FindCols(CustomColNames);
-  var Internal_Data = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("SMR");  
+  var DetCols = FindCols(CustomColNames), DetColRange = [], CadetRow = [], Internal_Data = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("SMR");  
   for(var i = 0; i < DetCols.length; i++){
     DetColRange[i] = Internal_Data.getRange(DetCols[i]);
   }

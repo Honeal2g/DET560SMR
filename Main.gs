@@ -1,4 +1,4 @@
-/* Custom SMR Tracker (Updated 20 June 2018) * SSgt Ulan O Hawthorne Jr. * Detatchment 560 (Manhattan College) *
+/* Custom SMR Tracker (Updated 11 July 2018) * SSgt Ulan O Hawthorne Jr. * Detatchment 560 (Manhattan College) *
 * https://wingsuid.holmcenter.com/psp/wings/WINGS/WINGS_LOCAL/q?ICAction=ICQryNameURL%3DPUBLIC.SMR&ICAction=ICQryNameURL=PUBLIC.SMR  */
 function onOpen() {
   var ui = SpreadsheetApp.getUi(), menu = ui.createMenu('SMR Options'), item = menu.addItem('Update Tracker','SMR_Code'); item.addToUi();

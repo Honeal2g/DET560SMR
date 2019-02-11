@@ -1,4 +1,4 @@
-/* Custom SMR Tracker (Updated 24 Jan 2019) * SSgt Ulan O Hawthorne Jr. * Detatchment 560 (Manhattan College) *
+/* Custom SMR Tracker (Updated 11 Feb 2019) * SSgt Ulan O Hawthorne Jr. * Detatchment 560 (Manhattan College) *
 * https://wingsuid.holmcenter.com/psp/wings/WINGS/WINGS_LOCAL/q?ICAction=ICQryNameURL%3DPUBLIC.SMR&ICAction=ICQryNameURL=PUBLIC.SMR  */
 function onOpen() {
   var ui = SpreadsheetApp.getUi(), menu = ui.createMenu('SMR Options'), item = menu.addItem('Update Tracker','SMR_Code'); item.addToUi();
@@ -8,7 +8,8 @@ function SMR_Code(){
     var ss = SpreadsheetApp.getActiveSpreadsheet(), file = DriveApp.getFilesByName("SMR.csv").next(), csvData = Utilities.parseCsv(file.getBlob().getDataAsString());
     DriveApp.getFilesByName('SMR.csv').next().setTrashed(true);    
     var dict = {}, Col_Index = [], CadetData = [];
-    var CustomColNames = ['EmplID','Last Name','First Name','AS Year','Stu Status','Major','ACT-Score','SAT-Verb','SAT-Math','AFOQT-Pilot','AFOQT-Nav','AFOQT-Apt','AFOQT-Verb','AFOQT-Quan','Term GPA','Cum GPA','Term','Comm Dt','Phys Exp','AFPFT','AFPFT Res','AFPFT Dt','MRS','Conditionals','Date of Birth','Citizen','Cat Sel','Term'];
+    var CustomColNames = ['EmplID','Last Name','First Name','AS Year','Stu Status','Major','ACT-Score','SAT-Verb','SAT-Math','AFOQT-Pilot','AFOQT-Nav','AFOQT-Apt','AFOQT-Verb','AFOQT-Quan','Term GPA','Cum GPA','Term',
+                          'Comm Dt','Phys Exp','AFPFT','AFPFT Res','AFPFT Dt','MRS','Conditionals','Date of Birth','Citizen','Cat Sel','Term'];
     for(var i = 0; i < CustomColNames.length; i++){//Capture Col Indexes
       Col_Index[i] = csvData[0].indexOf(CustomColNames[i]);//stores index for respective column name   
     }
@@ -108,7 +109,8 @@ function PushMajUpdates(){
   }     
 }  
 function PushUpdates(Dictionary){
-  var CustomColNames = ['EmpID','Last Name','First Name','AS-Level','Status','Majcode','ACT','Sat-Verb','Sat-Math','Pilot','CSO/NAV','AA','Verbal','Quant','TGPA','CGPA','TERM','DOC','DoDMERB-EXP','AFPT','AFPT-Stat','AFPT-DT','MRS','Conditionals','DOB','Citizen','Cat Sel'];
+  var CustomColNames = ['EmpID','Last Name','First Name','AS-Level','Status','Majcode','ACT','Sat-Verb','Sat-Math','Pilot','CSO/NAV','AA','Verbal','Quant','TGPA','CGPA','TERM',
+                        'DOC','DoDMERB-EXP','AFPT','AFPT-Stat','AFPT-DT','MRS','Conditionals','DOB','Citizen','Cat Sel'];
   var DetCols = FindCols(CustomColNames), DetColRange = [], CadetRow = [], Internal_Data = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("SMR");  
   for(var i = 0; i < DetCols.length; i++){
     DetColRange[i] = Internal_Data.getRange(DetCols[i]);
@@ -117,17 +119,15 @@ function PushUpdates(Dictionary){
   for(var i=0; i!= DetColValue.length; i++){               
     if(Dictionary[DetColValue[i]]){
       CadetRow = Dictionary[Number(DetColValue[i])]; 
-      for(var j=1; j < CadetRow.length; j++){        
+      for(var j=1; j <= CadetRow.length; j++){        
         if(CadetRow[j]){
           if(j == 3){//If we are updating AS-Level
-            DetColRange[j].getCell(i+1, 1).setValue(Number(String(CadetRow[j]).substring(String(CadetRow[j]).indexOf("S")+1, String(CadetRow[j]).length)));
-          }else if(j == 27){//If we are updating TGPA
-            //DetColRange[14].getCell(i+1, 1).setNote(CadetRow[j]);
-          }else{//otherwise continue updating normally
+            DetColRange[j].getCell(i+1, 1).setValue(Number(String(CadetRow[j]).substring(String(CadetRow[j]).indexOf("S")+1, String(CadetRow[j]).length))); //Removes the "AS" from "AS###" for easier spreadsheet sorting
+          }else if(DetColRange[j]){                      
             DetColRange[j].getCell(i+1, 1).setValue(CadetRow[j]);
           }
         }
       }        
     }     
-  }  
+  } 
 }

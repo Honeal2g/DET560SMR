@@ -1,4 +1,4 @@
-/* Custom SMR Tracker (Updated 19 FEB 2019) * SSgt Ulan O Hawthorne Jr. * Detatchment 560 (Manhattan College) *
+/* Custom SMR Tracker (Updated 1 MAR 2020) * TSgt Ulan O Hawthorne Jr. * Detatchment 560 (Manhattan College) *
 /* https://wingsuid.holmcenter.com/psc/wings_3/WINGS/WINGS_LOCAL/q/?ICAction=ICQryNameURL=PUBLIC.SMR_AS_FAVORITE*/
 function onOpen() {
   var ui = SpreadsheetApp.getUi(), menu = ui.createMenu('SMR Options'), item = menu.addItem('Update Tracker','SMR_Code'); item.addToUi();
@@ -7,8 +7,8 @@ function SMR_Code(){
   if(DriveApp.getFilesByName("SMR_AS_FAVORITE.csv").hasNext() == true){
     var ss = SpreadsheetApp.getActiveSpreadsheet(), file = DriveApp.getFilesByName("SMR_AS_FAVORITE.csv").next(), csvData = Utilities.parseCsv(file.getBlob().getDataAsString());
     DriveApp.getFilesByName('SMR_AS_FAVORITE.csv').next().setTrashed(true);    
-    var dict = {}, Col_Index = [], CadetData = [];
-    var CustomColNames = ['EmplID','Name','AS Year','Stu Status','Major','ACT-Score','SAT-Verb','SAT-Math','AFOQT-Pilot','AFOQT-Nav','AFOQT-Apt','AFOQT-Verb','AFOQT-Quan','Term GPA','Cum GPA','Term','Comm Dt','Enlist Date','Phys Exp','AFPFT','AFPFT Res','AFPFT Dt','MRS','Conditionals','Date of Birth','Citizen','Cat Sel','Term'];
+    var dict = {}, Col_Index = [], CadetData = [];    
+    var CustomColNames = ['EmplID','Name','AS Year','Stu Status','Major','SAT_COMP','AFOQT-Pilot','AFOQT-Nav','AFOQT-Apt','AFOQT-Verb','AFOQT-Quan','PCSM','Term GPA','Cum GPA','Term','Comm Dt','Enlist Date','Phys Exp','AFPFT','AFPFT Res','AFPFT Dt','MRS','Conditionals','Date of Birth','Citizen','Cat Sel','ACT-Score','Schlr Status','Schlr Type'];
     for(var i = 0; i < CustomColNames.length; i++){//Capture Col Indexes
       Col_Index[i] = csvData[0].indexOf(CustomColNames[i]);//stores index for respective column name   
     }
@@ -116,7 +116,7 @@ function PushMajUpdates(){
   }     
 }  
 function PushUpdates(Dictionary){
-  var CustomColNames = ['EmpID','Name','AS-Level','Status','Majcode','ACT','Sat-Verb','Sat-Math','Pilot','CSO/NAV','AA','Verbal','Quant','TGPA','CGPA','TERM','DOC','DOE','DoDMERB-EXP','AFPT','AFPT-Stat','AFPT-DT','MRS','Conditionals','DOB','Citizen','Cat Sel'];
+  var CustomColNames = ['EmpID','Name','AS-Level','Status','Majcode','SAT','Pilot','CSO/NAV','AA','Verbal','Quant','PCSM','TGPA','CGPA','TERM','DOC','DOE','DoDMERB-EXP','AFPT','AFPT-Stat','AFPT-DT','MRS','Conditionals','DOB','Citizen','Cat Sel','ACT','Schlr Status','Scholarship'];
   var DetCols = FindCols(CustomColNames), DetColRange = [], CadetRow = [], Internal_Data = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("SMR");  
   for(var i = 0; i < DetCols.length; i++){
     DetColRange[i] = Internal_Data.getRange(DetCols[i]);
